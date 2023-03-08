@@ -1,0 +1,18 @@
+name: 'Decode base64 string to file'
+description: 'Decode base64 string and saves it to a file'
+inputs:
+  filepath:
+    description: 'The file to save the decoded message'
+    required: true
+  encodedInput:
+    description: 'The encoded message to decode'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: chmod +x ${{ github.action_path }}/decode.sh
+      shell: bash
+    - run: decode.sh ${{inputs.encodedInput}} ${{inputs.filepath}}
+      shell: bash
